@@ -6,4 +6,5 @@ package com.development.audrius.smartmirror;
 
 public class Day {
     public String DayTemperature;
+    public String NightTemperature;
 }

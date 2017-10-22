@@ -1,14 +1,10 @@
 package com.development.audrius.smartmirror;
 
 import android.util.Log;
-import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 import static android.content.ContentValues.TAG;
 
@@ -17,39 +13,40 @@ import static android.content.ContentValues.TAG;
  */
 
 public class Forecast {
-    public ArrayList<Day> Days;
+    private ArrayList<Day> Days;
+
+    public ArrayList<Day> getDays() {
+        return Days;
+    }
 
     public static Forecast ParseJson(String jsonString) {
         Forecast forecast = new Forecast();
         forecast.Days = new ArrayList<Day>();
-        Day dayOne = new Day();
-        dayOne.DayTemperature = "30";
 
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
             JSONObject siteRep = jsonObject.getJSONObject("SiteRep");
-            JSONObject dayValues = siteRep.getJSONObject("DV");
-            JSONObject location = dayValues.getJSONObject("Location");
+            JSONObject dv = siteRep.getJSONObject("DV");
+            JSONObject location = dv.getJSONObject("Location");
             JSONArray periods = location.getJSONArray("Period");
             for (int i = 0; i < periods.length(); i++) {
                 JSONObject period = periods.getJSONObject(i);
                 JSONArray reps = period.getJSONArray("Rep");
-                for (int j = 0; j < reps.length(); j++) {
-                    JSONObject rep = reps.getJSONObject(j);
 
-                    //Day day = new Day();
-                    dayOne.DayTemperature = rep.getString("D");
-                }
+                Day day = new Day();
+
+                JSONObject dayRep = reps.getJSONObject(0);
+                day.DayTemperature = dayRep.getString("Dm");
+
+                JSONObject nightRep = reps.getJSONObject(1);
+                day.NightTemperature = nightRep.getString("Nm");
+
+                forecast.getDays().add(day);
             }
-
-            String type = dayValues.getString("type");
-            //TODO: implement parsing
         } catch (final JSONException e) {
             Log.e(TAG, "Json parsing error: " + e.getMessage());
-            dayOne.DayTemperature = e.getMessage();
         }
 
-        forecast.Days.add(dayOne);
         return forecast;
     }
 }

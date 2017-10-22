@@ -23,7 +23,7 @@ public class MetService {
 
     public Forecast GetWeather() {
         HttpClient client = new HttpClient("http://datapoint.metoffice.gov.uk/public/data/");
-        String result = client.GetString("val/wxfcs/all/json/352688?res=3hourly&key=" + apiKey);
+        String result = client.GetString("val/wxfcs/all/json/352688?res=daily&key=" + apiKey);
         return Forecast.ParseJson(result);
     }
 

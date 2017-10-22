@@ -111,8 +111,11 @@ public class MainActivity extends Activity {
         protected void onPostExecute(Forecast result) {
             super.onPostExecute(result);
 
-            TextView txtJson = (TextView) findViewById(R.id.httpResponse);
-            txtJson.setText(result.Days.get(0).DayTemperature);
+            TextView day1MaxTemp = (TextView) findViewById(R.id.Day1MaxTemp);
+            day1MaxTemp.setText(result.getDays().get(0).DayTemperature);
+
+            TextView day1MinTemp = (TextView) findViewById(R.id.Day1MinTemp);
+            day1MinTemp.setText(result.getDays().get(0).NightTemperature);
         }
     }
 }
