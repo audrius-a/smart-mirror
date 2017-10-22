@@ -2,83 +2,97 @@ package com.development.audrius.smartmirror;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends Activity {
-    private Timer clockTimer;
-    private Handler updateTimeHandler;
+    private Handler timerHandler = new Handler();
+    private MetService metService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        EnableKioskMode();
+        SetKioskMode();
         setContentView(R.layout.activity_main);
 
-        updateTimeHandler = new Handler(){
-            @Override
-            public void handleMessage(Message msg){
-                UpdateTime();
-            }
-        };
+        // Use this line to save unique MetOffice API key
+        // Remove the key once saved to avoid checking into source code
+        //SaveSetting("MetOfficeApiKey", "xxxxxxxxxxxxxxxxxxx");
 
-        clockTimer = new Timer();
-        clockTimer.schedule(new TimerTask(){
-            @Override
-            public void run() {
-                updateTimeHandler.sendEmptyMessage(0);
-            }
-        }, 0, 1000);
+        String apiKey = ReadSetting("MetOfficeApiKey");
 
-        Calendar calendar= Calendar.getInstance();
-        //calendar.set(2017, 8, 12);
-        TextView dayName = findViewById(R.id.dayName);
-        int test=calendar.get(Calendar.DAY_OF_WEEK);
-        dayName.setText(DaysOfWeek.values()[test-1].toString());
-        //dayName.setText(new Integer(test).toString());
+        metService = new MetService(apiKey);
 
+        UpdateWeather();
+        UpdateDate();
 
-       String currentDateTimeString= new Date().toString();
-        //String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
-
-// textView is the TextView view that should display it
-        TextView textView = findViewById(R.id.dateText);
-        textView.setText(currentDateTimeString);
-        //dateText.setText(currentDateTimeString);
-
+        timerHandler.postDelayed(timerRunnable, 1000);
     }
 
-    private void UpdateTime(){
+    private String ReadSetting(String key) {
+        SharedPreferences settings = getPreferences(0);
+        return settings.getString(key, null);
+    }
+
+    private void SaveSetting(String key, String value) {
+        SharedPreferences settings = getPreferences(0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
+    private Runnable timerRunnable = new Runnable() {
+        @Override
+        public void run() {
+            UpdateTime();
+            timerHandler.postDelayed(timerRunnable, 1000);
+        }
+    };
+
+    private void UpdateTime() {
         Date now = new Date();
-        SimpleDateFormat localDateFormat = new SimpleDateFormat("HH:mm");
-        TextView timeView=findViewById(R.id.timeView);
-        timeView.setText(localDateFormat.format(now));
 
-        SimpleDateFormat secondsDateFormat = new SimpleDateFormat(":ss");
-        TextView secondsView=findViewById(R.id.secondsView);
-        secondsView.setText(secondsDateFormat.format(now));
+        TextView timeView = findViewById(R.id.timeView);
+        String time = DateHelper.ToDateString(now, "HH:mm");
+        timeView.setText(time);
 
+        TextView secondsView = findViewById(R.id.secondsView);
+        String seconds = DateHelper.ToDateString(now, ":ss");
+        secondsView.setText(seconds);
+
+        if (time == "00:00" && seconds == ":00") {
+            UpdateDate();
+            UpdateWeather();
+        }
     }
 
-    private void EnableKioskMode() {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD){
+    private void UpdateDate() {
+        Calendar calendar = Calendar.getInstance();
+        TextView dayName = findViewById(R.id.dayName);
+        dayName.setText(DateHelper.GetDayOfWeekText(calendar) + " " + DateHelper.GetDayOfMonthOrdinal(calendar));
+    }
+
+    private void UpdateWeather() {
+        new UpdateWeatherTask().execute();
+    }
+
+    private void SetKioskMode() {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD) {
             requestWindowFeature(Window.FEATURE_NO_TITLE);
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             ActionBar actionBar = getActionBar();
             actionBar.hide();
         }
@@ -87,13 +101,18 @@ public class MainActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
-    public enum DaysOfWeek {
-        Sunday,
-        Monday,
-        Tuesday,
-        Wednesday,
-        Thursday,
-        Friday,
-        Saturday
+    private class UpdateWeatherTask extends AsyncTask<Void, Void, Forecast> {
+        @Override
+        protected Forecast doInBackground(Void... voids) {
+            return metService.GetWeather();
+        }
+
+        @Override
+        protected void onPostExecute(Forecast result) {
+            super.onPostExecute(result);
+
+            TextView txtJson = (TextView) findViewById(R.id.httpResponse);
+            txtJson.setText(result.Days.get(0).DayTemperature);
+        }
     }
 }
