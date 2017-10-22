@@ -112,10 +112,10 @@ public class MainActivity extends Activity {
             super.onPostExecute(result);
 
             TextView day1MaxTemp = (TextView) findViewById(R.id.Day1MaxTemp);
-            day1MaxTemp.setText(result.getDays().get(0).DayTemperature);
+            day1MaxTemp.setText(result.getDays().get(0).DayTemperature + "°C");
 
             TextView day1MinTemp = (TextView) findViewById(R.id.Day1MinTemp);
-            day1MinTemp.setText(result.getDays().get(0).NightTemperature);
+            day1MinTemp.setText(result.getDays().get(0).NightTemperature+"°C");
         }
     }
 }
