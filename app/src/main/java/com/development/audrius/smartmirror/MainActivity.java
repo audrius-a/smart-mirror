@@ -20,7 +20,6 @@ public class MainActivity extends Activity {
     private Handler timerHandler = new Handler();
     private MetService metService;
 
-
     private ArrayList<DayLayout> dayLayouts;
     TextView timeView;
     TextView secondsView;
@@ -53,27 +52,31 @@ public class MainActivity extends Activity {
         DayLayout dayOne = new DayLayout();
         dayOne.MaxTemperature = findViewById(R.id.Day1MaxTemp);
         dayOne.MinTemperature = findViewById(R.id.Day1MinTemp);
-        //ImageView favorite = (ImageView) view.findViewById(R.id.favourite_mark_icon);
+        dayOne.Icon = findViewById(R.id.Day1Icon);
         dayLayouts.add(dayOne);
 
         DayLayout dayTwo = new DayLayout();
         dayTwo.MaxTemperature = findViewById(R.id.Day2MaxTemp);
         dayTwo.MinTemperature = findViewById(R.id.Day2MinTemp);
+        dayTwo.Icon = findViewById(R.id.Day2Icon);
         dayLayouts.add(dayTwo);
 
         DayLayout dayThree = new DayLayout();
         dayThree.MaxTemperature = findViewById(R.id.Day3MaxTemp);
         dayThree.MinTemperature = findViewById(R.id.Day3MinTemp);
+        dayThree.Icon = findViewById(R.id.Day3Icon);
         dayLayouts.add(dayThree);
 
         DayLayout dayFour = new DayLayout();
         dayFour.MaxTemperature = findViewById(R.id.Day4MaxTemp);
         dayFour.MinTemperature = findViewById(R.id.Day4MinTemp);
+        dayFour.Icon = findViewById(R.id.Day4Icon);
         dayLayouts.add(dayFour);
 
         DayLayout dayFive = new DayLayout();
         dayFive.MaxTemperature = findViewById(R.id.Day5MaxTemp);
         dayFive.MinTemperature = findViewById(R.id.Day5MinTemp);
+        dayFive.Icon = findViewById(R.id.Day5Icon);
         dayLayouts.add(dayFive);
 
         timeView = findViewById(R.id.timeView);
@@ -154,7 +157,12 @@ public class MainActivity extends Activity {
             for (int i = 0; i < days.size(); i++) {
                 dayLayouts.get(i).MaxTemperature.setText(days.get(i).DayTemperature + "°C");
                 dayLayouts.get(i).MinTemperature.setText(days.get(i).NightTemperature + "°C");
+                dayLayouts.get(i).Icon.setImageResource(getWeatherIcon(days.get(i).Type));
             }
+        }
+
+        private int getWeatherIcon(int type){
+            return getResources().getIdentifier("ic_weather_" + type, "drawable", getPackageName());
         }
     }
 

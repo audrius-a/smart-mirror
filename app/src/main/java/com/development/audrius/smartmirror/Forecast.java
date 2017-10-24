@@ -37,6 +37,7 @@ public class Forecast {
 
                 JSONObject dayRep = reps.getJSONObject(0);
                 day.DayTemperature = dayRep.getString("Dm");
+                day.Type = dayRep.getInt("W");
 
                 JSONObject nightRep = reps.getJSONObject(1);
                 day.NightTemperature = nightRep.getString("Nm");

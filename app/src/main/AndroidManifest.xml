@@ -14,13 +14,11 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
         <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
-        <uses-permission android:name="ANDROID.PERMISSION.ACCESS_NETWORK_STATE"/>
         <receiver
             android:enabled="true"
             android:exported="true"
