@@ -1,10 +1,16 @@
 package com.development.audrius.smartmirror;
 
 import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import static android.content.ContentValues.TAG;
 
@@ -35,6 +41,9 @@ public class Forecast {
 
                 Day day = new Day();
 
+                day.Name = GetDayName(period.getString("value"));
+
+
                 JSONObject dayRep = reps.getJSONObject(0);
                 day.DayTemperature = dayRep.getString("Dm");
                 day.Type = dayRep.getInt("W");
@@ -49,5 +58,23 @@ public class Forecast {
         }
 
         return forecast;
+    }
+
+    private static String GetDayName(String dateValue) {
+        Calendar date = ParseDate(dateValue);
+        if (date == null)
+            return "ERR";
+
+        return DateHelper.GetDayOfWeekAcronym(date);
+    }
+
+    private static Calendar ParseDate(String value) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            dateFormat.parse(value);
+            return dateFormat.getCalendar();
+        } catch (ParseException ex) {
+            return null;
+        }
     }
 }

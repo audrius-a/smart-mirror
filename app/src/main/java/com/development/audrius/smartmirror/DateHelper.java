@@ -19,6 +19,11 @@ public class DateHelper {
         return DaysOfWeek.values()[dayOfWeek - 1].toString();
     }
 
+    public static String GetDayOfWeekAcronym(Calendar calendar) {
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        return DaysOfWeekShort.values()[dayOfWeek - 1].toString();
+    }
+
     public static String GetDayOfMonthOrdinal(Calendar calendar) {
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         return dayOfMonth + GetOrdinalCharacter(dayOfMonth);

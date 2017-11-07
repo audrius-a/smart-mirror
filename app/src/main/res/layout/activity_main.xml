@@ -6,289 +6,19 @@
     android:layout_height="match_parent"
     tools:context="com.development.audrius.smartmirror.MainActivity">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/Day1Layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/Day1Icon"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/ic_cloud_queue_white"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/Day1MaxTemp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="50dp"
-            android:text="#°C"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/white"
-            android:textSize="80sp"
-            app:layout_constraintRight_toLeftOf="@+id/Day1Icon"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginEnd="50dp" />
-
-        <TextView
-            android:id="@+id/Day1MinTemp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="90dp"
-            android:text="#°C"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/white"
-            android:textSize="50sp"
-            app:layout_constraintLeft_toLeftOf="@+id/Day1MaxTemp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="16dp" />
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/Day2Layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="24dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintRight_toLeftOf="@+id/Day3Layout"
-        app:layout_constraintTop_toBottomOf="@+id/Day1Layout"
-        android:layout_marginEnd="16dp">
-
-        <ImageView
-            android:id="@+id/Day2Icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_cloud_queue_white"
-            android:layout_marginRight="0dp"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginLeft="0dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="0dp" />
-
-        <TextView
-            android:id="@+id/Day2MaxTemp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:text="#°C"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/white"
-            android:textSize="24sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/Day2Icon"
-            app:layout_constraintHorizontal_bias="0.0" />
-
-        <TextView
-            android:id="@+id/Day2MinTemp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:text="#°C"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Day2MaxTemp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="24dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/Day1Layout"
-        app:layout_constraintRight_toLeftOf="@+id/Day4Layout"
-        android:id="@+id/Day3Layout"
-        android:layout_marginEnd="16dp">
-
-        <ImageView
-            android:id="@+id/Day3Icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_cloud_queue_white"
-            android:layout_marginLeft="0dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginRight="0dp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="0dp" />
-
-        <TextView
-            android:id="@+id/Day3MaxTemp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:text="#°C"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/white"
-            android:textSize="24sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Day3Icon"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
-
-        <TextView
-            android:id="@+id/Day3MinTemp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:text="#°C"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Day3MaxTemp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
-
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/Day4Layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="24dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintRight_toLeftOf="@+id/Day5Layout"
-        app:layout_constraintTop_toBottomOf="@+id/Day1Layout"
-        android:layout_marginEnd="16dp">
-
-        <ImageView
-            android:id="@+id/Day4Icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_cloud_queue_white"
-            android:layout_marginLeft="0dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginRight="0dp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="0dp" />
-
-        <TextView
-            android:id="@+id/Day4MaxTemp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:text="#°C"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/white"
-            android:textSize="24sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginTop="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/Day4Icon" />
-
-        <TextView
-            android:id="@+id/Day4MinTemp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:text="#°C"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Day4MaxTemp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Day1Layout"
-        android:id="@+id/Day5Layout"
-        android:layout_marginEnd="16dp">
-
-        <ImageView
-            android:id="@+id/Day5Icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_cloud_queue_white"
-            android:layout_marginLeft="0dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginRight="0dp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="0dp"
-            app:layout_constraintHorizontal_bias="0.0" />
-
-        <TextView
-            android:id="@+id/Day5MaxTemp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:text="#°C"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/white"
-            android:textSize="24sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/Day5Icon" />
-
-        <TextView
-            android:id="@+id/Day5MinTemp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:text="#°C"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Day5MaxTemp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
-    </android.support.constraint.ConstraintLayout>
-
     <TextView
         android:id="@+id/dayName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="60dp"
         android:text="TextView"
         android:textAlignment="viewStart"
         android:textColor="@android:color/white"
         android:textSize="36sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/day1View" />
 
     <TextView
         android:id="@+id/timeView"
@@ -316,5 +46,52 @@
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="@+id/timeView"
         app:layout_constraintLeft_toRightOf="@+id/timeView" />
+
+    <com.development.audrius.smartmirror.TodayView
+        android:id="@+id/day1View"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <com.development.audrius.smartmirror.DayView
+        android:id="@+id/day2View"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toTopOf="@+id/day3View"
+        app:layout_constraintRight_toLeftOf="@+id/day3View"
+        android:layout_marginRight="16dp">
+
+    </com.development.audrius.smartmirror.DayView>
+
+    <com.development.audrius.smartmirror.DayView
+        android:id="@+id/day3View"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toLeftOf="@+id/day4View"
+        android:layout_marginRight="16dp"
+        app:layout_constraintTop_toTopOf="@+id/day4View"
+        android:layout_marginTop="0dp" />
+
+    <com.development.audrius.smartmirror.DayView
+        android:id="@+id/day4View"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toLeftOf="@+id/day5View"
+        android:layout_marginRight="16dp"
+        app:layout_constraintTop_toTopOf="@+id/day5View"
+        android:layout_marginTop="0dp" />
+
+    <com.development.audrius.smartmirror.DayView
+        android:id="@+id/day5View"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

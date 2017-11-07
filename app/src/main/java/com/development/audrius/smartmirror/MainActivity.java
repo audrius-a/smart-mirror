@@ -20,10 +20,10 @@ public class MainActivity extends Activity {
     private Handler timerHandler = new Handler();
     private MetService metService;
 
-    private ArrayList<DayLayout> dayLayouts;
     TextView timeView;
     TextView secondsView;
     TextView dayName;
+    private ArrayList<DayView> dayViews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,37 +47,22 @@ public class MainActivity extends Activity {
     }
 
     private void initialiseLayout() {
-        dayLayouts = new ArrayList<>();
+        dayViews = new ArrayList<>();
 
-        DayLayout dayOne = new DayLayout();
-        dayOne.MaxTemperature = findViewById(R.id.Day1MaxTemp);
-        dayOne.MinTemperature = findViewById(R.id.Day1MinTemp);
-        dayOne.Icon = findViewById(R.id.Day1Icon);
-        dayLayouts.add(dayOne);
+        DayView dayOne =  findViewById(R.id.day1View);
+        dayViews.add(dayOne);
 
-        DayLayout dayTwo = new DayLayout();
-        dayTwo.MaxTemperature = findViewById(R.id.Day2MaxTemp);
-        dayTwo.MinTemperature = findViewById(R.id.Day2MinTemp);
-        dayTwo.Icon = findViewById(R.id.Day2Icon);
-        dayLayouts.add(dayTwo);
+        DayView dayTwo =  findViewById(R.id.day2View);
+        dayViews.add(dayTwo);
 
-        DayLayout dayThree = new DayLayout();
-        dayThree.MaxTemperature = findViewById(R.id.Day3MaxTemp);
-        dayThree.MinTemperature = findViewById(R.id.Day3MinTemp);
-        dayThree.Icon = findViewById(R.id.Day3Icon);
-        dayLayouts.add(dayThree);
+        DayView dayThree =  findViewById(R.id.day3View);
+        dayViews.add(dayThree);
 
-        DayLayout dayFour = new DayLayout();
-        dayFour.MaxTemperature = findViewById(R.id.Day4MaxTemp);
-        dayFour.MinTemperature = findViewById(R.id.Day4MinTemp);
-        dayFour.Icon = findViewById(R.id.Day4Icon);
-        dayLayouts.add(dayFour);
+        DayView dayFour =  findViewById(R.id.day4View);
+        dayViews.add(dayFour);
 
-        DayLayout dayFive = new DayLayout();
-        dayFive.MaxTemperature = findViewById(R.id.Day5MaxTemp);
-        dayFive.MinTemperature = findViewById(R.id.Day5MinTemp);
-        dayFive.Icon = findViewById(R.id.Day5Icon);
-        dayLayouts.add(dayFive);
+        DayView dayFive =  findViewById(R.id.day5View);
+        dayViews.add(dayFive);
 
         timeView = findViewById(R.id.timeView);
         secondsView = findViewById(R.id.secondsView);
@@ -155,14 +140,8 @@ public class MainActivity extends Activity {
 
             ArrayList<Day> days = result.getDays();
             for (int i = 0; i < days.size(); i++) {
-                dayLayouts.get(i).MaxTemperature.setText(days.get(i).DayTemperature + "°C");
-                dayLayouts.get(i).MinTemperature.setText(days.get(i).NightTemperature + "°C");
-                dayLayouts.get(i).Icon.setImageResource(getWeatherIcon(days.get(i).Type));
+                dayViews.get(i).Update(days.get(i));
             }
-        }
-
-        private int getWeatherIcon(int type){
-            return getResources().getIdentifier("ic_weather_" + type, "drawable", getPackageName());
         }
     }
 
