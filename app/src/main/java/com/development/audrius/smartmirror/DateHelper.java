@@ -19,6 +19,17 @@ public class DateHelper {
         return DaysOfWeek.values()[dayOfWeek - 1].toString();
     }
 
+    public static Boolean IsMidnight(Date date) {
+        String time = DateHelper.ToDateString(date, "HHmmss");
+        return time.equalsIgnoreCase("000000");
+    }
+
+    public static Boolean MinutesElapsed(Date date, Integer interval) {
+        Integer minutes = Integer.parseInt(DateHelper.ToDateString(date, "mm"));
+        Integer seconds = Integer.parseInt(DateHelper.ToDateString(date, "ss"));
+        return minutes % interval == 0 && seconds == 0;
+    }
+
     public static String GetDayOfWeekAcronym(Calendar calendar) {
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         return DaysOfWeekShort.values()[dayOfWeek - 1].toString();

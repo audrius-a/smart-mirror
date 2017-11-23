@@ -23,6 +23,7 @@ public class MainActivity extends Activity {
     TextView timeView;
     TextView secondsView;
     TextView dayName;
+    TextView status;
     private ArrayList<DayView> dayViews;
 
     @Override
@@ -49,24 +50,25 @@ public class MainActivity extends Activity {
     private void initialiseLayout() {
         dayViews = new ArrayList<>();
 
-        DayView dayOne =  findViewById(R.id.day1View);
+        DayView dayOne = findViewById(R.id.day1View);
         dayViews.add(dayOne);
 
-        DayView dayTwo =  findViewById(R.id.day2View);
+        DayView dayTwo = findViewById(R.id.day2View);
         dayViews.add(dayTwo);
 
-        DayView dayThree =  findViewById(R.id.day3View);
+        DayView dayThree = findViewById(R.id.day3View);
         dayViews.add(dayThree);
 
-        DayView dayFour =  findViewById(R.id.day4View);
+        DayView dayFour = findViewById(R.id.day4View);
         dayViews.add(dayFour);
 
-        DayView dayFive =  findViewById(R.id.day5View);
+        DayView dayFive = findViewById(R.id.day5View);
         dayViews.add(dayFive);
 
         timeView = findViewById(R.id.timeView);
         secondsView = findViewById(R.id.secondsView);
         dayName = findViewById(R.id.dayName);
+        status = findViewById(R.id.status);
     }
 
     private void SetKioskMode() {
@@ -113,8 +115,11 @@ public class MainActivity extends Activity {
         String seconds = DateHelper.ToDateString(now, ":ss");
         secondsView.setText(seconds);
 
-        if (time == "00:00" && seconds == ":00") {
+        if (DateHelper.IsMidnight(now)) {
             UpdateDate();
+        }
+
+        if (DateHelper.MinutesElapsed(now, 10)) {
             UpdateWeather();
         }
     }
@@ -128,19 +133,29 @@ public class MainActivity extends Activity {
         new UpdateWeatherTask().execute();
     }
 
-    private class UpdateWeatherTask extends AsyncTask<Void, Void, Forecast> {
+    private class UpdateWeatherTask extends AsyncTask<Void, Void, AsyncTaskResult<Forecast>> {
         @Override
-        protected Forecast doInBackground(Void... voids) {
-            return metService.GetWeather();
+        protected AsyncTaskResult<Forecast> doInBackground(Void... voids) {
+            try {
+                return new AsyncTaskResult(metService.GetWeather());
+            } catch (Exception ex) {
+                return new AsyncTaskResult(ex);
+            }
         }
 
         @Override
-        protected void onPostExecute(Forecast result) {
+        protected void onPostExecute(AsyncTaskResult<Forecast> result) {
             super.onPostExecute(result);
 
-            ArrayList<Day> days = result.getDays();
-            for (int i = 0; i < days.size(); i++) {
-                dayViews.get(i).Update(days.get(i));
+            Exception error = result.getError();
+            if (error == null) {
+                status.setText("");
+                ArrayList<Day> days = result.getResult().getDays();
+                for (int i = 0; i < days.size(); i++) {
+                    dayViews.get(i).Update(days.get(i));
+                }
+            } else {
+                status.setText(error.getClass().getSimpleName() + ": " + error.getMessage());
             }
         }
     }
