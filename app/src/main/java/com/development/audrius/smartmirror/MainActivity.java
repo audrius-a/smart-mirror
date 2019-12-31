@@ -24,6 +24,8 @@ public class MainActivity extends Activity {
     TextView secondsView;
     TextView dayName;
     TextView status;
+    Date lastUpdateDate;
+    boolean hasError;
     private ArrayList<DayView> dayViews;
 
     @Override
@@ -115,11 +117,16 @@ public class MainActivity extends Activity {
         String seconds = DateHelper.ToDateString(now, ":ss");
         secondsView.setText(seconds);
 
+        if (!hasError) {
+            status.setText("Updated " + DateHelper.Ago(lastUpdateDate));
+        }
+
         if (DateHelper.IsMidnight(now)) {
             UpdateDate();
         }
 
-        if (DateHelper.MinutesElapsed(now, 10)) {
+        int interval = hasError ? 1 : 10;
+        if (DateHelper.MinutesElapsed(now, interval)) {
             UpdateWeather();
         }
     }
@@ -154,10 +161,12 @@ public class MainActivity extends Activity {
                 for (int i = 0; i < days.size(); i++) {
                     dayViews.get(i).Update(days.get(i));
                 }
+                lastUpdateDate = new Date();
+                hasError = false;
             } else {
-                status.setText(error.getClass().getSimpleName() + ": " + error.getMessage());
+                hasError = true;
+                status.setText("Error: " + error.getMessage());
             }
         }
     }
-
 }

@@ -22,10 +22,18 @@ public class MetService {
     }
 
     public Forecast GetWeather() {
+        if (apiKey == null || apiKey == "") {
+            throw new IllegalArgumentException("API key is not set");
+        }
+
         HttpClient client = new HttpClient("http://datapoint.metoffice.gov.uk/public/data/");
         String result = client.GetString("val/wxfcs/all/json/352688?res=daily&key=" + apiKey);
+
+        if (result == null || result == "") {
+            throw new RuntimeException("Failed to get data from Met Office");
+        }
+
         return Forecast.ParseJson(result);
     }
-
 }
 

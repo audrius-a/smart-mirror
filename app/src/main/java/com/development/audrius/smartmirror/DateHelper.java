@@ -3,6 +3,7 @@ package com.development.audrius.smartmirror;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import android.text.format.DateUtils;
 
 /**
  * Created by Audrius on 11/10/2017.
@@ -38,6 +39,11 @@ public class DateHelper {
     public static String GetDayOfMonthOrdinal(Calendar calendar) {
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         return dayOfMonth + GetOrdinalCharacter(dayOfMonth);
+    }
+
+    public static String Ago(Date date) {
+        long now = System.currentTimeMillis();
+        return DateUtils.getRelativeTimeSpanString(date.getTime(), now, DateUtils.MINUTE_IN_MILLIS).toString();
     }
 
     private static String GetOrdinalCharacter(int number) {
